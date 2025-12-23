@@ -16,10 +16,10 @@ class AdminUserSeeder extends Seeder
     {
         
         User::updateOrCreate(
-            ['email' => 'admin@interview.local'],
+            ['email' => 'smartlab.fmm@gmail.com'],
             [
                 'name'      => 'System Admin',
-                'password'  => Hash::make('password123'),
+                'password'  => Hash::make('smartlab.fmm@25$'),
                 'is_admin'  => true,
             ]
         );
