@@ -64,6 +64,13 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])
         ->name('admin.appointments.destroy');
+    
+    
+    // Appointment status updates
+    Route::post('/appointments/{appointment}/done', [AppointmentController::class, 'markDone'])->name('admin.appointments.done');
+    Route::post('/appointments/{appointment}/no-show', [AppointmentController::class, 'markNoShow'])->name('admin.appointments.no_show');
+    Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('admin.appointments.cancel');
+
 });
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

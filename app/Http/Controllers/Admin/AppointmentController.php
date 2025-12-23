@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\BookingCancellation;
-use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Mail;
 
@@ -75,6 +74,18 @@ class AppointmentController extends Controller
 
         return redirect()->route('admin.appointments.index')
             ->with('success', 'Appointment Deleted.');
+    }
+
+    public function markDone(Appointment $appointment)
+    {
+        $appointment->update(['status' => 'done']);
+        return redirect()->route('admin.appointments.index')->with('success', 'Appointment marked as done.');
+    }
+
+    public function markNoShow(Appointment $appointment)
+    {
+        $appointment->update(['status' => 'no_show']);
+        return redirect()->route('admin.appointments.index')->with('success', 'Appointment marked as no-show.');
     }
 
 }

@@ -8,7 +8,8 @@ class Appointment extends Model
 {
     protected $fillable = [
         'candidate_id',
-        'interview_slot_id'
+        'interview_slot_id',
+        'status',
     ];
 
     public function candidate()

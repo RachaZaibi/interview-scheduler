@@ -16,13 +16,39 @@
         <p><strong>Phone:</strong> {{ $appointment->candidate->phone }}</p>
         <p><strong>University:</strong> {{ $appointment->candidate->university ?? '-' }}</p>
 
+        <p><strong>Status:</strong>
+            @if($appointment->status == 'scheduled')
+                <span class="badge bg-primary">Scheduled</span>
+            @elseif($appointment->status == 'done')
+                <span class="badge bg-success">Done</span>
+            @elseif($appointment->status == 'canceled')
+                <span class="badge bg-danger">Canceled</span>
+            @elseif($appointment->status == 'no_show')
+                <span class="badge bg-warning text-dark">No Show</span>
+            @endif
+        </p>
+
         <div class="mt-3">
-            <form action="{{ route('admin.appointments.destroy', $appointment) }}" method="POST" onsubmit="return confirm('Cancel this appointment?');">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger">Cancel Appointment</button>
-                <a href="{{ route('admin.appointments.index') }}" class="btn btn-secondary ms-2">Back</a>
-            </form>
+            @if($appointment->status != 'done')
+                <form action="{{ route('admin.appointments.done', $appointment) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button class="btn btn-success">Mark Done</button>
+                </form>
+            @endif
+            @if($appointment->status != 'no_show')
+                <form action="{{ route('admin.appointments.no_show', $appointment) }}" method="POST" class="d-inline">
+                    @csrf
+                    <button class="btn btn-warning">No Show</button>
+                </form>
+            @endif
+            @if($appointment->status != 'canceled')
+                <form action="{{ route('admin.appointments.cancel', $appointment) }}" method="POST" class="d-inline" onsubmit="return confirm('Cancel this appointment?');">
+                    @csrf
+                    <button class="btn btn-danger">Cancel</button>
+                </form>
+            @endif
+
+            <a href="{{ route('admin.appointments.index') }}" class="btn btn-secondary ms-2">Back</a>
         </div>
     </div>
 </div>
