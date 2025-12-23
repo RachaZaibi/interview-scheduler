@@ -66,4 +66,16 @@ class SlotController extends Controller
         return redirect('/admin/slots')
             ->with('success', 'Interview slot created successfully.');
     }
+
+    public function destroy (InterviewSlot $slot ){
+        if ($slot->appointment()->exists()) {
+            return redirect()->route('admin.slots.index')
+                ->with('failed', 'Cannot delete slot: an appointment is already booked.');
+        }
+
+        $slot->delete();
+        
+        return redirect()->route('admin.slots.index')
+            ->with('success', 'Slot Deleted.');
+    }
 }

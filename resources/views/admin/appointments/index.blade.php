@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -26,11 +26,12 @@
             <td>{{ $appointment->candidate->email }}</td>
             <td class="text-end">
                 <a href="{{ route('admin.appointments.show', $appointment) }}" class="btn btn-sm btn-outline-primary">View</a>
+                <a href="{{ route('admin.appointments.cancel', $appointment) }}" class="btn btn-sm btn-outline-warning">Cancel</a>
 
-                <form action="{{ route('admin.appointments.destroy', $appointment) }}" method="POST" class="d-inline-block ms-1" onsubmit="return confirm('Cancel this appointment?');">
+                <form action="{{ route('admin.appointments.destroy', $appointment) }}" method="POST" class="d-inline-block ms-1" onsubmit="return confirm('Delete this appointment?');">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-sm btn-danger">Cancel</button>
+                    <button class="btn btn-sm btn-danger">Delete</button>
                 </form>
             </td>
         </tr>

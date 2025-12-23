@@ -26,7 +26,7 @@ class AppointmentController extends Controller
         return view('admin.appointments.show', compact('appointment'));
     }
 
-    public function destroy(Appointment $appointment)
+    public function cancel(Appointment $appointment)
     {
         // Free the slot
         $slot = $appointment->interviewSlot;
@@ -49,6 +49,32 @@ class AppointmentController extends Controller
 
         return redirect()->route('admin.appointments.index')
             ->with('success', 'Appointment canceled.');
+    }
+
+    public function destroy(Appointment $appointment)
+    {
+        // Free the slot
+        $slot = $appointment->interviewSlot;
+        if ($slot) {
+            // $slot->update(['is_booked' => false]);
+            $slot->delete();
+        }
+
+        // // Notify candidate of cancellation
+        // try {
+        //     if ($appointment->candidate) {
+        //         Mail::to($appointment->candidate->email)
+        //             ->send(new BookingCancellation($appointment));
+        //     }
+        // } catch (\Exception $e) {
+        //     logger()->error('Failed to send cancellation email: ' . $e->getMessage());
+        // }
+
+        // Delete appointment
+        $appointment->delete();
+
+        return redirect()->route('admin.appointments.index')
+            ->with('success', 'Appointment Deleted.');
     }
 
 }

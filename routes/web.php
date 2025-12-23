@@ -49,6 +49,9 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::post('/slots', [SlotController::class, 'store'])
         ->name('admin.slots.store');
 
+    Route::delete('/slots', [SlotController::class, 'destroy'])
+        ->name('admin.slots.destroy');
+
     // Appointments (bookings)
     Route::get('/appointments', [AppointmentController::class, 'index'])
         ->name('admin.appointments.index');
@@ -56,11 +59,13 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])
         ->name('admin.appointments.show');
 
+    Route::post('/appointments/{appointment}', [AppointmentController::class, 'cancel'])
+        ->name('admin.appointments.cancel');
+
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])
         ->name('admin.appointments.destroy');
+});
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
-
-});

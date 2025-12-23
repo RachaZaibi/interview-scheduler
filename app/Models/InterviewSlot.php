@@ -18,4 +18,9 @@ class InterviewSlot extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
 }
